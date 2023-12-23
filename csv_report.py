@@ -61,5 +61,5 @@ def sum_benefits(csv_filename):
     print('Time difference between the first and last timestamps:', time_diff)
 
 
-csv_filename = 'arbitrage_data_v2:0_withot_volume.csv'
+csv_filename = 'arbitrage_data_v2.csv'
 sum_benefits(csv_filename)

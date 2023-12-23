@@ -6,7 +6,7 @@ from .exchange_api import ExchangeApi
 
 
 class RamzinexApi(ExchangeApi):
-    RAMZINEX_ORDER_BOOK_ENDPOINT = "http://127.0.0.1:8001/exchange/api/v1.0/exchange/orderbooks/pair_id/buys_sells"
+    RAMZINEX_ORDER_BOOK_ENDPOINT = "https://publicapi.ramzinex.com/exchange/api/v1.0/exchange/orderbooks/buys_sells"
 
     def __init__(self):
         self.all_order_book = None

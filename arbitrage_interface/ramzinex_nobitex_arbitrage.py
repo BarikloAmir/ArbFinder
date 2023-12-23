@@ -16,7 +16,7 @@ class RamzinexNobitexArbitrage(Arbitrage):
         self.ramzinex_api = ramzinex_api
         self.nobitex_api = nobitex_api
         self.ramzinex_nobitex_symbol_id_equivalent_pair = get_symbol_pair_id_in_nobitex_and_ramzinex(
-            "symbol_pair_id_mapping2.csv")  # todo : getting this from csv config file
+            "symbol_pair_id_mapping_ramzinex_nobitex.csv")  # todo : getting this from csv config file
         self.last_opportunity = {item[0]: (0, 0) for item in self.ramzinex_nobitex_symbol_id_equivalent_pair}
 
     async def find_arbitrage_opportunity(self):

@@ -27,7 +27,7 @@ def save_ramzinex_nobitex_arbitrage_to_csv(nobitex_order_book, ramzinex_order_bo
     """
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    with open('arbitrage_data_v2:02.csv', mode='a', newline='') as file:
+    with open('arbitrage_data_v2.csv', mode='a', newline='') as file:
         writer = csv.writer(file)
 
         if file.tell() == 0:
@@ -51,11 +51,17 @@ def save_ramzinex_nobitex_arbitrage_to_csv(nobitex_order_book, ramzinex_order_bo
                          nobitex_to_ramzinex_unit_ratio, buy_price, sell_price, buy_side, sell_side, volume])
 
 
-def get_symbol_pair_id_in_nobitex_and_ramzinex(csv_file_address):
-    symbol_pair_id_list = []
+def get_symbol_pair_id(csv_file_address, symbol_key, id_key, ratio_key):
     with open(csv_file_address, mode='r') as csvfile:
         reader = csv.DictReader(csvfile)
-        for row in reader:
-            symbol_pair_id_list.append(
-                (row['nobitex_symbol'], int(row['ramzinex_pair_id']), int(row['nobitex/ramzinex'])))
-    return symbol_pair_id_list
+        return [(row[symbol_key], int(row[id_key]), int(row[ratio_key])) for row in reader]
+
+
+def get_symbol_pair_id_in_nobitex_and_ramzinex(csv_file_address):
+    return get_symbol_pair_id(csv_file_address, 'nobitex_symbol', 'ramzinex_pair_id', 'nobitex/ramzinex')
+
+
+def get_symbol_pair_id_in_mexc_and_ramzinex(csv_file_address):
+    return get_symbol_pair_id(csv_file_address, 'mexc_symbol', 'ramzinex_pair_id', 'mexc/ramzinex')
+
+
