@@ -1,1 +1,4 @@
 outputs
+arbitrage_data_v2.csv
+error_log.txt
+test.py

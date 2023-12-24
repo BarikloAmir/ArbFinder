@@ -239,7 +239,7 @@ def fetch_depth_data(symbol):
     if response.status_code == 200:
         return 1
     else:
-        print(f"Error {response.status_code}: {response.text}")
+        print(f"Error {response.status_code}: {response.text} and symbol: {symbol}")
         return None
 
 
@@ -257,7 +257,7 @@ for symbol in symbol_in_ramzinex_and_pair_id_in_ramzinex.keys():
         print(symbol_in_ramzinex_and_pair_id_in_ramzinex[ramzinex_symbol], ",", symbol, ",1")
     else:
         not_ok_list.append(symbol)
-    sleep(0.1)
+    sleep(0.01)
 
 print(ok_list)
 print(not_ok_list)

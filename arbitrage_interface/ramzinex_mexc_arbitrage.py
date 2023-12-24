@@ -48,10 +48,10 @@ class RamzinexMexcArbitrage(Arbitrage):
                 except Exception as e:
                     print("error in getting and process " + str(mexc_symbol) + " orderbooks : " + str(e))
 
-            time.sleep(1)
+            # time.sleep(1)
 
     def check_latest_orders(self, mexc_order_book: OrderBook, ramzinex_order_book: OrderBook,
-                            mexc_to_ramzinex_unit_ratio: int, exchanges="ramzinex-mexc"):
+                            mexc_to_ramzinex_unit_ratio: float, exchanges="ramzinex-mexc"):
         """this method getting latest orders in order book and checking them for finding arbitrage opportunity"""
         mexc_highest_bid = mexc_order_book.get_highest_bid_order()
         mexc_lowest_ask = mexc_order_book.get_lowest_ask_order()
@@ -121,7 +121,7 @@ class RamzinexMexcArbitrage(Arbitrage):
                     self.last_opportunity[mexc_order_book.symbol][1] != opportunity[1]:
                 action = 1
                 self.last_opportunity[mexc_order_book.symbol] = opportunity
-            save_ramzinex_nobitex_arbitrage_to_csv(mexc_order_book, ramzinex_order_book, mexc_lowest_ask,
+            save_ramzinex_nobitex_arbitrage_to_csv("MEXC",mexc_order_book, ramzinex_order_book, mexc_lowest_ask,
                                                    mexc_highest_bid,
                                                    ramzinex_lowest_ask, ramzinex_highest_bid, benefit, percent, action,
                                                    mexc_to_ramzinex_unit_ratio, buy_price, sell_price, buy_side,

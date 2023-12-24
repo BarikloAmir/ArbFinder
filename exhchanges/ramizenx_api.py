@@ -6,7 +6,7 @@ from .exchange_api import ExchangeApi
 
 
 class RamzinexApi(ExchangeApi):
-    RAMZINEX_ORDER_BOOK_ENDPOINT = "https://publicapi.ramzinex.com/exchange/api/v1.0/exchange/orderbooks/buys_sells"
+    RAMZINEX_ORDER_BOOK_ENDPOINT = "https://publicapi.ramzinex.com/exchange/api/v1.0/exchange/orderbooks/pair_id/buys_sells"
 
     def __init__(self):
         self.all_order_book = None
@@ -51,9 +51,17 @@ class RamzinexApi(ExchangeApi):
         all_order_book = {}  # this dictionary saving all orderbooks with pair_id key
         for pair_id, symbol_data in all_symbol_data.items():
             try:
+                rial_to_tether = 1
+                if pair_id == "260":
+                    rial_to_tether = self.get_tether_price()
+
                 last_update_time = symbol_data.get('lastUpdate', 0)
-                bids = [Order(OrderType.BID, bid[0], bid[1]) for bid in symbol_data['buys']]
-                asks = [Order(OrderType.ASK, ask[0], ask[1]) for ask in symbol_data['sells']]
+                bids = [Order(OrderType.BID, bid[0] / rial_to_tether, bid[1]) for bid in
+                        symbol_data['buys']]
+
+                asks = [Order(OrderType.ASK, ask[0] / rial_to_tether, ask[1]) for ask in
+                        symbol_data['sells']]
+
                 all_order_book[int(pair_id)] = OrderBook(bids, asks, pair_id=int(pair_id),
                                                          last_update_time=last_update_time)
             except Exception as e:
@@ -61,3 +69,7 @@ class RamzinexApi(ExchangeApi):
 
         self.all_order_book = all_order_book
         return 1
+
+    def get_tether_price(self):
+        tether_order_book = self.get_symbol_order_book(11)
+        return tether_order_book.get_lowest_ask_order().price

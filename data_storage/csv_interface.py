@@ -2,7 +2,8 @@ import csv
 from datetime import datetime
 
 
-def save_ramzinex_nobitex_arbitrage_to_csv(nobitex_order_book, ramzinex_order_book, nobitex_lowest_ask,
+def save_ramzinex_nobitex_arbitrage_to_csv(exchange, nobitex_order_book, ramzinex_order_book,
+                                           nobitex_lowest_ask,
                                            nobitex_highest_bid,
                                            ramzinex_lowest_ask, ramzinex_highest_bid, benefit, percent, action,
                                            nobitex_to_ramzinex_unit_ratio, buy_price, sell_price, buy_side, sell_side,
@@ -33,16 +34,16 @@ def save_ramzinex_nobitex_arbitrage_to_csv(nobitex_order_book, ramzinex_order_bo
         if file.tell() == 0:
             # Write header if the file is empty
             writer.writerow(
-                ['Timestamp', 'NOBITEX Last Update Time ', 'RAMZINEX Last Update Time', 'Exchange',
-                 'Symbol (NOBITEX)', 'Pair ID (RAMZINEX)', 'Lowest Ask Price (NOBITEX)',
-                 'Highest Bid Price (NOBITEX)', 'Lowest Ask Price (RAMZINEX)', 'Highest Bid Price (RAMZINEX)',
-                 'Lowest Ask Volume(NOBITEX)',
-                 'Highest Bid Volume (NOBITEX)', 'Lowest Ask Volume (RAMZINEX)', 'Highest Bid Volume (RAMZINEX)',
-                 'Benefit', 'Percent', 'Action', "Nobitex To Ramzinex Unit Ratio", "Buy Price", "Sell Price",
+                ['Timestamp', f'{exchange} Last Update Time ', 'RAMZINEX Last Update Time', 'Exchange',
+                 f'Symbol ({exchange})', 'Pair ID (RAMZINEX)', f'Lowest Ask Price ({exchange})',
+                 f'Highest Bid Price ({exchange})', 'Lowest Ask Price (RAMZINEX)', 'Highest Bid Price (RAMZINEX)',
+                 f'Lowest Ask Volume({exchange})',
+                 f'Highest Bid Volume ({exchange})', 'Lowest Ask Volume (RAMZINEX)', 'Highest Bid Volume (RAMZINEX)',
+                 'Benefit', 'Percent', 'Action', f"{exchange} To Ramzinex Unit Ratio", "Buy Price", "Sell Price",
                  "Buy Side", "Sell Side", "Our trading volume"])
 
         writer.writerow([timestamp, nobitex_order_book.last_update_time,
-                         ramzinex_order_book.last_update_time, 'NOBITEX-RAMZINEX', nobitex_order_book.symbol,
+                         ramzinex_order_book.last_update_time, f'{exchange}-RAMZINEX', nobitex_order_book.symbol,
                          ramzinex_order_book.pair_id,
                          nobitex_lowest_ask.price, nobitex_highest_bid.price,
                          ramzinex_lowest_ask.price, ramzinex_highest_bid.price, nobitex_lowest_ask.volume,
@@ -54,7 +55,7 @@ def save_ramzinex_nobitex_arbitrage_to_csv(nobitex_order_book, ramzinex_order_bo
 def get_symbol_pair_id(csv_file_address, symbol_key, id_key, ratio_key):
     with open(csv_file_address, mode='r') as csvfile:
         reader = csv.DictReader(csvfile)
-        return [(row[symbol_key], int(row[id_key]), int(row[ratio_key])) for row in reader]
+        return [(row[symbol_key], int(row[id_key]), float(row[ratio_key])) for row in reader]
 
 
 def get_symbol_pair_id_in_nobitex_and_ramzinex(csv_file_address):
@@ -63,5 +64,3 @@ def get_symbol_pair_id_in_nobitex_and_ramzinex(csv_file_address):
 
 def get_symbol_pair_id_in_mexc_and_ramzinex(csv_file_address):
     return get_symbol_pair_id(csv_file_address, 'mexc_symbol', 'ramzinex_pair_id', 'mexc/ramzinex')
-
-

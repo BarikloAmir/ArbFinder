@@ -22,7 +22,7 @@ def sum_benefits(csv_filename):
 
         for row in reader:
             # Assuming the column names are 'Symbol', 'Action', 'Benefit', and 'Time'
-            symbol = row['Symbol (NOBITEX)']
+            symbol = row[f'Symbol ({exchange})']
             action = int(row['Action'])
             benefit = float(row['Benefit'])
             percent = float(row["Percent"])
@@ -37,7 +37,7 @@ def sum_benefits(csv_filename):
                 quote = "rial"
                 fe = 0.0025
 
-            if buy_side == "nobitex":
+            if buy_side == f"{exchange}":
                 wage = buy_price * volume * fe
             else:
                 wage = sell_price * volume * fe
@@ -62,4 +62,5 @@ def sum_benefits(csv_filename):
 
 
 csv_filename = 'arbitrage_data_v2.csv'
+exchange = "MEXC"
 sum_benefits(csv_filename)

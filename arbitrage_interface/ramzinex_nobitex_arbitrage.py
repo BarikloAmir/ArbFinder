@@ -122,7 +122,7 @@ class RamzinexNobitexArbitrage(Arbitrage):
                     self.last_opportunity[nobitex_order_book.symbol][1] != opportunity[1]:
                 action = 1
                 self.last_opportunity[nobitex_order_book.symbol] = opportunity
-            save_ramzinex_nobitex_arbitrage_to_csv(nobitex_order_book, ramzinex_order_book, nobitex_lowest_ask,
+            save_ramzinex_nobitex_arbitrage_to_csv("NOBITEX",nobitex_order_book, ramzinex_order_book, nobitex_lowest_ask,
                                                    nobitex_highest_bid,
                                                    ramzinex_lowest_ask, ramzinex_highest_bid, benefit, percent, action,
                                                    nobitex_to_ramzinex_unit_ratio, buy_price, sell_price, buy_side,

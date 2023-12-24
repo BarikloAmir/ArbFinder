@@ -15,7 +15,7 @@ def main():
                     'LINKUSDT', 'UNIUSDT', 'ATOMUSDT', 'FTTUSDT', 'MATICUSDT', 'MASKUSDT', 'LDOUSDT', 'USTCUSDT',
                     'ADAUSDT', 'FILUSDT', 'COMPUSDT', 'MKRUSDT', 'BSVUSDT', 'KSMUSDT', 'CAKEUSDT', 'BURGERUSDT',
                     'ICPUSDT', 'SOLUSDT', 'EOSUSDT', '1INCHUSDT', 'SXPUSDT', 'FTMUSDT', 'DAIUSDT', 'MANAUSDT',
-                    'AXSUSDT']
+                    'AXSUSDT', 'STARLUSDT']
 
     ramzinex_mexc_arbitrage = RamzinexMexcArbitrage(RamzinexApi(), MexcApi(mexc_symbols))
     asyncio.run(ramzinex_mexc_arbitrage.find_arbitrage_opportunity())

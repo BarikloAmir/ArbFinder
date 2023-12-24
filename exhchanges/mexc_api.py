@@ -39,10 +39,8 @@ class MexcApi(ExchangeApi):
 
         all_order_book = {}  # this dictionary saving all orderbooks with symbol key
         for symbol, symbol_data in all_symbol_data.items():
-            if symbol == "status":
-                continue
             try:
-                last_update_time = symbol_data.get('lastUpdate', 0)
+                last_update_time = symbol_data.get('timestamp', 0)
                 bids = [Order(OrderType.BID, float(price), float(volume)) for price, volume in
                         symbol_data.get('bids', [])]
                 asks = [Order(OrderType.ASK, float(price), float(volume)) for price, volume in
